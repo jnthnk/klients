@@ -1,9 +1,9 @@
 <?php
 
 
-// Try to connect to a database called 'klients' on localhost
-// This database must be created before in phpmyadmin
-// Send a JSON error message if authentication fails
+// Tentar conetar a una base de dados em localhost
+// Essa base já deve ter sido criada por phpmyadmin
+// Retornar mensagens de erro em JSON em caso de falhar a conexao
 
 try {
   
@@ -23,7 +23,9 @@ try {
 }
 
 
-// 
+// Analizar o routing atual sobre a API, junto com o tipo de REQUEST
+// e determinar objetivamente o tipo de request em um nome curto
+// Tb salvar o ID do cliente no caso
 
 $_path = $_GET['path'] ?? '';
 
@@ -85,7 +87,8 @@ if ($_path) {
 }
 
 
-// 
+// Para ler, atualizar e apagar um cliente, é preciso confirmar a existencia da fileira na database primeiro
+// Entao, pre-carregar o cliente desejado ou a lista de todos os clientes em cada caso
 
 if ($json_request === 'READ' || $json_request === 'UPDATE' || $json_request === 'DELETE') {
   
@@ -102,7 +105,7 @@ if ($json_request === 'READ' || $json_request === 'UPDATE' || $json_request === 
 }
 
 
-// 
+// Mais chequagens importantes em cada tipo de REQUEST, como a validacao de variáveis
 
 switch ($json_request) {
   
@@ -161,7 +164,8 @@ switch ($json_request) {
 }
 
 
-// 
+// Agrupar os dados desejados para enviar ao usuário em um único Array
+// Converter o Array em JSON, configurar os corretos HEADERS e enviar
 
 $json = [
   'request' => $json_request,
