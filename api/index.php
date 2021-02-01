@@ -15,7 +15,7 @@ try {
   header('HTTP/1.0 500 Internal Server Error');
   
   echo json_encode([
-    'message' => 'Database Connection Error: '.$_error->getMessage()
+    'message' => 'Database Error: '.$_error->getMessage()
   ]);
   
   exit;
@@ -35,28 +35,44 @@ if ($_path) {
   
   if ($_paths[0] === 'clients') {
     
-    $json_request = 'GET ALL';
+    $json_request = 'LIST';
     
   } elseif ($_paths[0] === 'client') {
     
-    $_subpath = $_paths[1] ?? '';
+    $data_ID = $_paths[1] ?? '';
     
     $_method = $_SERVER['REQUEST_METHOD'];
     
-    if ($_subpath) {
+    if ($data_ID) {
       
-      
+      if (ctype_digit($data_ID)) {
+        
+        switch ($_method) {
+          case 'PUT': case 'POST':
+            $json_request = 'UPDATE';
+          break; case 'DELETE':
+            $json_request = 'DELETE';
+          break; default:
+            $json_request = 'READ';
+        }
+        
+      } else {
+        
+        $json_request = 'READ';
+        $json_message = 'To read certain client data, provide a valid integer ID';
+        
+      }
       
     } else {
       
       if ($_method === 'POST') {
         
-        $json_request = 'ADD ONE';
+        $json_request = 'CREATE';
         
       } else {
         
-        $json_request = 'GET ONE';
-        $json_message = 'To get certain client data, provide the ID';
+        $json_request = 'READ';
+        $json_message = 'To read certain client data, provide an ID';
         
       }
       
@@ -69,7 +85,48 @@ if ($_path) {
 
 // 
 
+if ($json_request === 'READ' || $json_request === 'UPDATE' || $json_request === 'DELETE') {
+  
+  
+  
+}
 
+
+// 
+
+switch ($json_request) {
+  
+  // 
+  
+  case 'CREATE':
+    
+    
+    
+  // 
+  
+  break; case 'READ':
+  
+    
+    
+  // 
+  
+  break; case 'UPDATE':
+    
+    
+    
+  // 
+  
+  break; case 'DELETE':
+    
+    
+    
+  // 
+  
+  break; default;
+    
+    
+    
+}
 
 
 // 
@@ -78,6 +135,14 @@ $json = [
   'request' => $json_request,
   'message' => $json_message,
 ];
+
+if (isset($json_clients)) {
+  $json['clients'] = $json_clients;
+}
+
+if (isset($json_client)) {
+  $json['client'] = $json_client;
+}
 
 // 
 
