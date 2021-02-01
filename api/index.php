@@ -87,80 +87,78 @@ if ($_path) {
 }
 
 
-// Para ler, atualizar e apagar um cliente, é preciso confirmar a existencia da fileira na database primeiro
-// Entao, pre-carregar o cliente desejado ou a lista de todos os clientes em cada caso
-
-if ($json_request === 'READ' || $json_request === 'UPDATE' || $json_request === 'DELETE') {
-  
-  $_query = $data->query("SELECT * FROM clients WHERE ID = ".$data_ID." LIMIT 1");
-  
-  $data_client = $_query->fetch(PDO::FETCH_ASSOC);
-  
-} elseif ($json_request === 'LIST') {
-  
-  $_query = $data->query("SELECT * FROM clients ORDER_BY name DESC");
-  
-  $data_clients = $_query->fetchAll(PDO::FETCH_ASSOC);
-  
-}
-
-
 // Mais chequagens importantes em cada tipo de REQUEST, como a validacao de variáveis
 
 switch ($json_request) {
   
-  // 
+  // CRUD ;D
   
-  case 'CREATE':
+  case 'CREATE': case 'READ': case 'UPDATE': case 'DELETE':
     
+    // 
     
-    
-  // 
-  
-  break; case 'READ':
-    
-    $json_message = $data_client ? 'Client with ID '.$data_ID.' read successfully' : 'Client with ID '.$data_ID.' not found';
-    
-  // 
-  
-  break; case 'UPDATE':
-    
-    if (!$data_client) {
+    if ($json_request !== 'CREATE') {
       
-      $json_message = 'Client with ID '.$data_ID.' not found';
+      $_query = $data->query("SELECT * FROM clients WHERE ID = ".$data_ID." LIMIT 1");
+      
+      $data_client = $_query->fetch(PDO::FETCH_ASSOC);
+      
+      if (!$data_client) {
+        
+        $json_message = 'Client with ID '.$data_ID.' not found';
+        
+        break;
+        
+      }
+      
+    }
+    
+    // 
+    
+    if ($json_request === 'READ') {
+      
+      $json_message = 'Client with ID '.$data_ID.' read successfully';
       
       break;
       
     }
     
+    // 
     
-    
-  // 
-  
-  break; case 'DELETE':
-    
-    if (!$data_client) {
+    if ($json_request === 'DELETE') {
       
-      $json_message = 'Client with ID '.$data_ID.' not found';
+      $_query = $data->query("DELETE * FROM clients WHERE ID = ".$data_ID);
+      
+      $json_message = 'Client with ID '.$data_ID.' removed successfully';
       
       break;
       
     }
     
+    // 
     
     
-  // 
-  
-  break; case 'LIST':
     
-    $json_message = $data_client ? 'List of clients read successfully' : 'List of clients not found';
+    break;
     
   // 
   
-  break; case 'NONE':
+  case 'LIST':
+    
+    $_query = $data->query("SELECT * FROM clients");
+    
+    $data_clients = $_query->fetchAll(PDO::FETCH_ASSOC);
+    
+    $json_message = $data_clients ? 'List of clients read successfully' : 'List of clients not found';
+    
+    break;
+    
+  // 
+  
+  case 'NONE':
     
     $json_message = 'No request found!';
-    
+  
 }
 
 
