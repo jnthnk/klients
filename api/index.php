@@ -47,8 +47,10 @@ if ($_path) {
       
       if (ctype_digit($data_ID)) {
         
+        $data_ID = intval($data_ID);
+        
         switch ($_method) {
-          case 'PUT': case 'POST':
+          case 'PUT': case 'POST': 
             $json_request = 'UPDATE';
           break; case 'DELETE':
             $json_request = 'DELETE';
@@ -87,7 +89,15 @@ if ($_path) {
 
 if ($json_request === 'READ' || $json_request === 'UPDATE' || $json_request === 'DELETE') {
   
+  $_query = $data->query("SELECT * FROM clients WHERE ID = ".$data_ID." LIMIT 1");
   
+  $data_client = $_query->fetch(PDO::FETCH_ASSOC);
+  
+} elseif ($json_request === 'LIST') {
+  
+  $_query = $data->query("SELECT * FROM clients ORDER_BY name DESC");
+  
+  $data_clients = $_query->fetchAll(PDO::FETCH_ASSOC);
   
 }
 
@@ -105,12 +115,20 @@ switch ($json_request) {
   // 
   
   break; case 'READ':
-  
     
+    $json_message = $data_client ? 'Client with ID '.$data_ID.' read successfully' : 'Client with ID '.$data_ID.' not found';
     
   // 
   
   break; case 'UPDATE':
+    
+    if (!$data_client) {
+      
+      $json_message = 'Client with ID '.$data_ID.' not found';
+      
+      break;
+      
+    }
     
     
     
@@ -118,13 +136,27 @@ switch ($json_request) {
   
   break; case 'DELETE':
     
+    if (!$data_client) {
+      
+      $json_message = 'Client with ID '.$data_ID.' not found';
+      
+      break;
+      
+    }
+    
     
     
   // 
   
-  break; default;
+  break; case 'LIST':
     
+    $json_message = $data_client ? 'List of clients read successfully' : 'List of clients not found';
     
+  // 
+  
+  break; case 'NONE':
+    
+    $json_message = 'No request found!';
     
 }
 
@@ -136,12 +168,12 @@ $json = [
   'message' => $json_message,
 ];
 
-if (isset($json_clients)) {
-  $json['clients'] = $json_clients;
+if ($data_clients ?? null) {
+  $json['clients'] = $data_clients;
 }
 
-if (isset($json_client)) {
-  $json['client'] = $json_client;
+if ($data_client ?? null) {
+  $json['client'] = $data_client;
 }
 
 // 
