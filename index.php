@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head> 
@@ -7,16 +6,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h3>Cadastro de Clientes</h3>
+    
     <section id="formulario">
         <form>
-            <h2>Cadastro</h2>
-            <label for="nome">Nome</label>
-            <input type="text" name="nome" id="nome">
-            <label>CPF</label>
-            <input type="text" name="CPF" id="CPF">
-            <label>Data Nasc</label>
-            <input type="text" name="DTN" id="DTN">
+            <h2>Controle de Clientes</h2>
+            <input  type="submit" value="Cadastrar">
+            <input  type="submit" value="Procurar">
+            
+
         </form>
     </section>
 
@@ -28,12 +25,45 @@
                 <td>CPF</td>
                 <td colspan="2">DATA NASC</td>
             </tr>
-
             
+            <?php
+                $request = array(
+                    CURLOPT_URL => "http://localhost/klients/api/clients",
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "GET",
+                    CURLOPT_HTTPHEADER => array("cache-control: no-cache")
+                );
 
-        
+                $curl = curl_init();
+                
+                curl_setopt_array($curl, $request);
+                
+                $response = curl_exec($curl);
+                $err = curl_error($curl);
+                curl_close($curl);
+
+                if(!$err){
+                    $lista = json_decode($response,true);
+                    print_r($lista);
+                    foreach ($lista['clients'] as $key => $linha) {
+                        echo
+                            '<tr id="Titulo">
+                                <td>'.$linha['ID'].'</td>
+                                <td>'.$linha['name'].'</td>
+                                <td>'.$linha['CPF'].'</td>
+                                <td>'.$linha['date'].'</td>
+
+                            </tr>';
+
+                    }
+
+                }
+
+            ?>
+
         </table>
-
     </section>
 
 </body>
