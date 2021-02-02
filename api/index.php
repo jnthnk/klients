@@ -87,15 +87,17 @@ if ($_path) {
 }
 
 
-// Mais chequagens importantes em cada tipo de REQUEST, como a validacao de variáveis
+// Mais chequagens importantes em cada tipo de REQUEST
 
 switch ($json_request) {
   
-  // CRUD ;D
+  // CREATE, READ, UPDATE ou DELETE (CRUD ;D)
   
   case 'CREATE': case 'READ': case 'UPDATE': case 'DELETE':
     
-    // 
+    // No caso de READ, UPDATE e DELETE
+    // Confirmar primeiro a existencia de um registro com o ID pasado na URL
+    // Se nao existir criar mensagem de erro
     
     if ($json_request !== 'CREATE') {
       
@@ -130,6 +132,21 @@ switch ($json_request) {
       $_query = $data->query("DELETE * FROM clients WHERE ID = ".$data_ID);
       
       $json_message = 'Client with ID '.$data_ID.' removed successfully';
+      
+      break;
+      
+    }
+    
+    // Se 
+    
+    $_name = $_POST['name'] ?? '';
+    $_cpf = $_POST['cpf'] ?? '';
+    $_date = $_POST['date'] ?? '';
+    
+    if (!$_name || !$_cpf || !$_date) {
+      
+      $json_message = $json_request === 'CREATE' ? 'Client failed to create' : 'Client failed to update';
+      $json_message .= ': one or more required fields are empty';
       
       break;
       
