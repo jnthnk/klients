@@ -1,0 +1,50 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+label, input{
+    display: block;
+    line-height: 32px;
+    height: 32px;
+    font-size: 14pt;
+    width: 100%;
+}
+form{
+    width: 400px;
+    padding: 20px;
+    margin: 30px auto;
+    background-color: rgba(0, 0, 0, .1);
+}
+input[type="submit"]{
+    margin-top: 10px;
+}
+#formulario{
+    width:  33%;
+   
+}
+#tabela{
+    width: 66%;
+   
+}
+h2{
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+table{
+    width: 90%;
+    margin: auto;
+}
+tr{
+    line-height: 32px;
+
+}
+tr#Titulo{
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, .5);
+}
+td{
+    padding: 0px 5px;
+}
