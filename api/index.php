@@ -27,6 +27,15 @@ try {
 // e determinar objetivamente o tipo de request em um nome curto
 // Tb salvar o ID do cliente no caso
 
+// O tipo de requisicao
+// NONE --> 
+// LIST --> 
+// FIND --> 
+// CREATE --> 
+// READ --> 
+// UPDATE --> 
+// DELETE --> 
+
 $data_request = 'NONE';
 
 $_path = $_GET['path'] ?? '';
@@ -37,7 +46,8 @@ if ($_path) {
   
   if ($_paths[0] === 'clients') {
     
-    $data_request = 'LIST';
+    $data_name = $_paths[1] ?? '';
+    $data_request = $data_name ? 'FIND' : 'LIST';
     
   } elseif ($_paths[0] === 'client') {
     
@@ -123,7 +133,7 @@ switch ($data_request) {
     
     if ($data_request === 'DELETE') {
       
-      $data_query = $data->prepare('DELETE * FROM clients WHERE ID = ?');
+      $data_query = $data->prepare('DELETE FROM clients WHERE ID = ?');
       $data_result = $data_query->execute([$data_ID]);
       
       $data_message = $data_result ? "Client with ID $data_ID deleted successfully" : "Client with ID $data_ID failed to delete: unexpected database error";
