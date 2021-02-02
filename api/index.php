@@ -100,19 +100,30 @@ switch ($data_request) {
         
       } else {
         
-        $data_code = 12;
+        $data_code = 13;
         
         break;
         
       }
       
       $data_query = $data->prepare("SELECT * FROM clients WHERE ID = ? LIMIT 1");
-      $data_query->execute([$data_ID]);
-      $data_client = $data_query->fetch(PDO::FETCH_ASSOC);
+      $data_result = $data_query->execute([$data_ID]);
       
-      if (!$data_client) {
+      if ($data_result) {
         
-        $data_code = 13;
+        $data_client = $data_query->fetch(PDO::FETCH_ASSOC);
+        
+        if (!$data_client) {
+          
+          $data_code = 14;
+          
+          break;
+          
+        }
+        
+      } else {
+        
+        $data_code = 11;
         
         break;
         
@@ -136,7 +147,7 @@ switch ($data_request) {
       
       $data_query = $data->prepare('DELETE FROM clients WHERE ID = ?');
       $data_result = $data_query->execute([$data_ID]);
-      $data_code = $data_result ? 6 : 18;
+      $data_code = $data_result ? 6 : 11;
       
       break;
       
@@ -150,7 +161,7 @@ switch ($data_request) {
     
     if (!$post_name || !$post_CPF || !$post_date) {
       
-      $data_code = 14;
+      $data_code = 15;
       
       break;
       
@@ -158,7 +169,7 @@ switch ($data_request) {
     
     if (!preg_match('/^[a-zA-Z \p{L}]+$/ui', $post_name)) {
       
-      $data_code = 15;
+      $data_code = 16;
       
       break;
       
@@ -166,7 +177,7 @@ switch ($data_request) {
     
     if (!preg_match('/^[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}$/', $post_CPF)) {
       
-      $data_code = 16;
+      $data_code = 17;
       
       break;
       
@@ -174,7 +185,7 @@ switch ($data_request) {
     
     if (!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $post_date)) {
       
-      $data_code = 17;
+      $data_code = 18;
       
       break;
       
@@ -190,13 +201,13 @@ switch ($data_request) {
       
       $data_query = $data->prepare('INSERT INTO clients (name, CPF, date) VALUES (?, ?, ?)');
       $data_result = $data_query->execute([$post_name, $post_CPF, $post_unix]);
-      $data_code = $data_result ? 3 : 18;
+      $data_code = $data_result ? 3 : 11;
       
     } else {
       
       $data_query = $data->prepare('UPDATE clients SET name = ?, CPF = ?, date = ? WHERE ID = ?');
       $data_result = $data_query->execute([$post_name, $post_CPF, $post_unix, $data_ID]);
-      $data_code = $data_result ? 5 : 18;
+      $data_code = $data_result ? 5 : 11;
       
     }
     
@@ -216,7 +227,7 @@ switch ($data_request) {
   
   case 'NONE':
     
-    $data_code = 11;
+    $data_code = 12;
     
 }
 
@@ -234,14 +245,14 @@ $data_message = [
   8 => '',
   9 => '',
   10 => 'DATABASE CONNECTION ERROR',
-  11 => 'NO REQUEST',
-  12 => 'CLIENT ID INVALID',
-  13 => 'CLIENT NOT FOUND',
-  14 => 'CLIENT FIELD MISSING',
-  15 => 'CLIENT NAME INVALID',
-  16 => 'CLIENT CPF INVALID',
-  17 => 'CLIENT DATE INVALID',
-  18 => 'DATABASE EXECUTION ERROR',
+  11 => 'DATABASE EXECUTION ERROR',
+  12 => 'NO REQUEST',
+  13 => 'CLIENT ID INVALID',
+  14 => 'CLIENT NOT FOUND',
+  15 => 'CLIENT FIELD MISSING',
+  16 => 'CLIENT NAME INVALID',
+  17 => 'CLIENT CPF INVALID',
+  18 => 'CLIENT DATE INVALID',
   19 => '',
   20 => '',
 ][$data_code] ?? '';
