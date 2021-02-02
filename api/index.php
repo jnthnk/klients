@@ -50,7 +50,7 @@ if ($_path) {
       if ($_method === 'PUT' || $_method === 'POST') {
         $data_request = 'UPDATE';
       } elseif ($_method === 'DELETE') {
-        $data_request = 'UPDATE';
+        $data_request = 'DELETE';
       } else {
         $data_request = 'READ';
       }
@@ -89,7 +89,7 @@ switch ($data_request) {
         
       } else {
         
-        $data_message = "Client failed to read: ID value is invalid";
+        $data_message = "Client failed to read: ID value is empty or invalid";
         
         break;
         
@@ -229,7 +229,6 @@ switch ($data_request) {
 // Converter o Array em JSON, configurar os corretos HEADERS e enviar
 
 $json = [
-  'request' => $data_request,
   'message' => $data_message,
 ];
 
