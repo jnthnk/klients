@@ -47,8 +47,7 @@ if ($_path) {
   
   if ($_paths[0] === 'clients') {
     
-    $data_name = $_paths[1] ?? '';
-    $data_request = $data_name ? 'FIND' : 'LIST';
+    $data_request = 'LIST';
     
   } elseif ($_paths[0] === 'client') {
     
@@ -135,7 +134,7 @@ switch ($data_request) {
     
     if ($data_request === 'READ') {
       
-      $data_code = 4;
+      $data_code = 3;
       
       break;
       
@@ -189,25 +188,23 @@ switch ($data_request) {
       
       break;
       
-    } else {
-      
-      $post_unix = strtotime($post_date);
-      
     }
     
     // 
+    
+    $post_unix = strtotime($post_date);
     
     if ($data_request === 'CREATE') {
       
       $data_query = $data->prepare('INSERT INTO clients (name, CPF, date) VALUES (?, ?, ?)');
       $data_result = $data_query->execute([$post_name, $post_CPF, $post_unix]);
-      $data_code = $data_result ? 3 : 11;
+      $data_code = $data_result ? 2 : 11;
       
     } else {
       
       $data_query = $data->prepare('UPDATE clients SET name = ?, CPF = ?, date = ? WHERE ID = ?');
       $data_result = $data_query->execute([$post_name, $post_CPF, $post_unix, $data_ID]);
-      $data_code = $data_result ? 5 : 11;
+      $data_code = $data_result ? 4 : 11;
       
     }
     
@@ -217,9 +214,19 @@ switch ($data_request) {
   
   case 'LIST':
     
-    $data_query = $data->query("SELECT * FROM clients");
-    $data_clients = $data_query->fetchAll(PDO::FETCH_ASSOC) ?: [];
-    $data_code = 1;
+    $data_query = $data->prepare("SELECT * FROM clients ORDER BY name ASC");
+    $data_result = $data_query->execute();
+    
+    if ($data_result) {
+      
+      $data_code = 1;
+      $data_clients = $data_query->fetchAll(PDO::FETCH_ASSOC) ?: [];
+      
+    } else {
+      
+      $data_code = 11;
+      
+    }
     
     break;
     
@@ -235,12 +242,12 @@ switch ($data_request) {
 // 
 
 $data_message = [
-  1 => 'LIST CLIENTS',
-  2 => 'FIND CLIENTS',
-  3 => 'CREATE CLIENT',
-  4 => 'READ CLIENT',
-  5 => 'UPDATE CLIENT',
-  6 => 'DELETE CLIENT',
+  1 => 'CLIENTS LISTED',
+  2 => 'CLIENT CREATED',
+  3 => 'CLIENT READ',
+  4 => 'CLIENT UPDATED',
+  5 => 'CLIENT DELETED',
+  6 => '',
   7 => '',
   8 => '',
   9 => '',
