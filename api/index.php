@@ -15,7 +15,8 @@ try {
   header('HTTP/1.0 500 Internal Server Error');
   
   echo json_encode([
-    'message' => 'Database Error: '.$_error->getMessage()
+    'code' => 10,
+    'message' => 'DATABASE CONNECTION ERROR ('.$_error->getMessage().')',
   ]);
   
   exit;
@@ -99,7 +100,7 @@ switch ($data_request) {
         
       } else {
         
-        $data_message = "Client failed to read: ID value is empty or invalid";
+        $data_code = 12;
         
         break;
         
@@ -111,7 +112,7 @@ switch ($data_request) {
       
       if (!$data_client) {
         
-        $data_message = "Client with ID $data_ID failed to read: ID doesn't match any client";
+        $data_code = 13;
         
         break;
         
@@ -123,7 +124,7 @@ switch ($data_request) {
     
     if ($data_request === 'READ') {
       
-      $data_message = "Client with ID $data_ID read successfully";
+      $data_code = 4;
       
       break;
       
@@ -135,14 +136,13 @@ switch ($data_request) {
       
       $data_query = $data->prepare('DELETE FROM clients WHERE ID = ?');
       $data_result = $data_query->execute([$data_ID]);
-      
-      $data_message = $data_result ? "Client with ID $data_ID deleted successfully" : "Client with ID $data_ID failed to delete: unexpected database error";
+      $data_code = $data_result ? 6 : 18;
       
       break;
       
     }
     
-    // Se 
+    //  
     
     $post_name = $_POST['name'] ?? '';
     $post_CPF = $_POST['cpf'] ?? '';
@@ -150,41 +150,31 @@ switch ($data_request) {
     
     if (!$post_name || !$post_CPF || !$post_date) {
       
-      $data_message = $data_request === 'CREATE' ? 'Client failed to create' : 'Client failed to update';
-      $data_message .= ': one or more required fields are empty';
+      $data_code = 14;
       
       break;
       
     }
-    
-    // 
     
     if (!preg_match('/^[a-zA-Z \p{L}]+$/ui', $post_name)) {
       
-      $data_message = $data_request === 'CREATE' ? 'Client failed to create' : 'Client failed to update';
-      $data_message .= ': name value is invalid';
+      $data_code = 15;
       
       break;
       
     }
-    
-    // 
     
     if (!preg_match('/^[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}$/', $post_CPF)) {
       
-      $data_message = $data_request === 'CREATE' ? 'Client failed to create' : 'Client failed to update';
-      $data_message .= ': CPF value is invalid';
+      $data_code = 16;
       
       break;
       
     }
     
-    // 
-    
     if (!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $post_date)) {
       
-      $data_message = $data_request === 'CREATE' ? 'Client failed to create' : 'Client failed to update';
-      $data_message .= ': birth date value is invalid';
+      $data_code = 17;
       
       break;
       
@@ -200,15 +190,13 @@ switch ($data_request) {
       
       $data_query = $data->prepare('INSERT INTO clients (name, CPF, date) VALUES (?, ?, ?)');
       $data_result = $data_query->execute([$post_name, $post_CPF, $post_unix]);
-      
-      $data_message = $data_result ? 'Client created successfully' : 'Client failed to create: unexpected database error';
+      $data_code = $data_result ? 3 : 18;
       
     } else {
       
       $data_query = $data->prepare('UPDATE clients SET name = ?, CPF = ?, date = ? WHERE ID = ?');
       $data_result = $data_query->execute([$post_name, $post_CPF, $post_unix, $data_ID]);
-      
-      $data_message = $data_result ? "Client with ID $data_ID updated successfully" : "Client with ID $data_ID failed to update: unexpected database error";
+      $data_code = $data_result ? 5 : 18;
       
     }
     
@@ -218,11 +206,9 @@ switch ($data_request) {
   
   case 'LIST':
     
-    $_query = $data->query("SELECT * FROM clients");
-    
-    $data_clients = $_query->fetchAll(PDO::FETCH_ASSOC);
-    
-    $data_message = $data_clients ? 'List of clients read successfully' : 'List of clients not found';
+    $data_query = $data->query("SELECT * FROM clients");
+    $data_clients = $data_query->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    $data_code = 1;
     
     break;
     
@@ -230,15 +216,40 @@ switch ($data_request) {
   
   case 'NONE':
     
-    $data_message = 'No request found!';
+    $data_code = 11;
     
 }
 
 
-// Agrupar os dados desejados para enviar ao usuário em um único Array
-// Converter o Array em JSON, configurar os corretos HEADERS e enviar
+// 
+
+$data_message = [
+  1 => 'LIST CLIENTS',
+  2 => 'FIND CLIENTS',
+  3 => 'CREATE CLIENT',
+  4 => 'READ CLIENT',
+  5 => 'UPDATE CLIENT',
+  6 => 'DELETE CLIENT',
+  7 => '',
+  8 => '',
+  9 => '',
+  10 => 'DATABASE CONNECTION ERROR',
+  11 => 'NO REQUEST',
+  12 => 'CLIENT ID INVALID',
+  13 => 'CLIENT NOT FOUND',
+  14 => 'CLIENT FIELD MISSING',
+  15 => 'CLIENT NAME INVALID',
+  16 => 'CLIENT CPF INVALID',
+  17 => 'CLIENT DATE INVALID',
+  18 => 'DATABASE EXECUTION ERROR',
+  19 => '',
+  20 => '',
+][$data_code] ?? '';
+
+// 
 
 $json = [
+  'code' => $data_code,
   'message' => $data_message,
 ];
 
@@ -253,6 +264,10 @@ if ($data_client ?? null) {
 // 
 
 header('Content-Type:application/json');
+
+if ($data_code === 18) {
+  header('HTTP/1.0 500 Internal Server Error');
+}
 
 echo json_encode($json, JSON_UNESCAPED_UNICODE);
 
