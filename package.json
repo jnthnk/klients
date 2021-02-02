@@ -1,0 +1,13 @@
+{
+  "name": "klients",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "bsync": "browser-sync start -p \"127.0.0.1/klients\" -f \"**/*\" --host 127.0.0.1 --open external --no-inject-changes",
+    "dev": "concurrently --kill-others \"npm run bsync\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
