@@ -139,11 +139,11 @@ switch ($json_request) {
     
     // Se 
     
-    $_name = $_POST['name'] ?? '';
-    $_cpf = $_POST['cpf'] ?? '';
-    $_date = $_POST['date'] ?? '';
+    $post_name = $_POST['name'] ?? '';
+    $post_cpf = $_POST['cpf'] ?? '';
+    $post_date = $_POST['date'] ?? '';
     
-    if (!$_name || !$_cpf || !$_date) {
+    if (!$post_name || !$post_cpf || !$post_date) {
       
       $json_message = $json_request === 'CREATE' ? 'Client failed to create' : 'Client failed to update';
       $json_message .= ': one or more required fields are empty';
@@ -154,7 +154,52 @@ switch ($json_request) {
     
     // 
     
+    if (!preg_match('/^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2})$/', $post_name)) {
+      
+      $json_message = $json_request === 'CREATE' ? 'Client failed to create' : 'Client failed to update';
+      $json_message .= ': name value is invalid';
+      
+      break;
+      
+    }
     
+    // 
+    
+    if (!preg_match('/^[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}$/', $post_cpf)) {
+      
+      $json_message = $json_request === 'CREATE' ? 'Client failed to create' : 'Client failed to update';
+      $json_message .= ': CPF value is invalid';
+      
+      break;
+      
+    }
+    
+    // 
+    
+    if (!preg_match('/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/', $post_date)) {
+      
+      $json_message = $json_request === 'CREATE' ? 'Client failed to create' : 'Client failed to update';
+      $json_message .= ': birth date value is invalid';
+      
+      break;
+      
+    } else {
+      
+      $post_unix = strtotime($post_date);
+      
+    }
+    
+    // 
+    
+    if ($json_request === 'CREATE') {
+      
+      $data_query = $data->query("");
+      
+    } else {
+      
+      $data_query = $data->query("");
+      
+    }
     
     break;
     
@@ -175,7 +220,7 @@ switch ($json_request) {
   case 'NONE':
     
     $json_message = 'No request found!';
-  
+    
 }
 
 
