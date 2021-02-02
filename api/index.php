@@ -7,7 +7,7 @@
 
 try {
   
-  $data = new PDO('mysql:host=localhost;dbname=klients', 'root', '');
+  $data = new PDO('mysql:host=localhost;dbname=klients;charset=utf8', 'root', '');
   
 } catch (PDOException $_error) {
   
@@ -111,7 +111,7 @@ switch ($data_request) {
       
       if (!$data_client) {
         
-        $data_message = "Client with ID $data_ID failed to read: ID doesn't match any record";
+        $data_message = "Client with ID $data_ID failed to read: ID doesn't match any client";
         
         break;
         
