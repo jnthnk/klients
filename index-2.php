@@ -34,16 +34,9 @@ $page = [
   <body>
     <header class="header">
       <h1 class="title is-large">Ver todos os clientes:</h1>
-      <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident incidunt magni ipsa possimus dolorum numquam aliquid porro odio velit aliquam!</p>
+      <p class="text is-large">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident incidunt magni ipsa possimus dolorum numquam aliquid porro odio velit aliquam!</p>
     </header>
-    <nav class="options">
-      <ul class="grid">
-        <li class="grid-item">
-          <a class="link" href="client-2.php">Cadastrar Novo Cliente</a>
-        </li>
-      </ul>
-    </nav>
-    <section class="section">
+    <section class="content">
       <p class="text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus, rerum.</p>
       <table class="table">
         <thead class="table-head">
@@ -67,10 +60,13 @@ $page = [
           </tbody>
         <?php } ?>
       </table>
-    </section>
-    <section class="section">
-      <p class="text">Debug:</p>
-      <pre><?php echo var_dump($data); ?></pre>
+      <nav class="content-options">
+        <ul class="grid">
+          <li class="grid-item">
+            <a class="link" href="client-2.php">Cadastrar Novo Cliente</a>
+          </li>
+        </ul>
+      </nav>
     </section>
   </body>
 </html>

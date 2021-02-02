@@ -13,6 +13,7 @@ body {
   color: #333;
   background: #fff;
   letter-spacing: .01rem;
+  box-shadow: 0 0 2rem 1rem rgba(0, 0, 0, .1);
 }
 
 
@@ -35,8 +36,8 @@ body {
   letter-spacing: .02rem;
 }
 .title.is-large {
-  font-size: 2rem;
-  line-height: 1.1;
+  font-size: 1.5rem;
+  line-height: 1.2;
 }
 .title.is-medium {
   font-size: 1.5rem;
@@ -143,18 +144,13 @@ body {
 .header {
   display: block;
   padding: 2rem;
-  background: #ddd;
+  background: #fff;
 }
 .header > .title {
   margin-bottom: 1rem;
 }
 
 
-.options {
-  display: block;
-  padding: 1rem 2rem;
-  letter-spacing: .02rem;
-}
 .options > .grid {
   margin: -.5rem;
 }
@@ -168,15 +164,33 @@ body {
 }
 
 
-.section {
+.content {
+  position: relative;
   display: block;
   padding: 2rem;
   background: #eee;
 }
-.section > .text {
+.content > .text {
   margin-bottom: 1rem;
 }
-
+.content-options {
+  display: block;
+  padding: 0 1rem;
+  margin: 2rem -2rem -2rem;
+  background: #FF6F00;
+}
+.content-options > .grid {
+  padding: .25rem;
+}
+.content-options > .grid > .grid-item {
+  padding: .25rem;
+}
+.content-options > .grid > .grid-item > .link {
+  padding: .5rem;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+}
 
 @media (min-width: 400px) {
   
@@ -227,6 +241,25 @@ body {
   }
   
   
+  /*
+  .title {
+    
+  }
+  */
+  .title.is-large {
+    font-size: 1.75rem;
+    line-height: 1.15;
+  }
+  .title.is-medium {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  .title.is-small {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+  
+  
 }
 
 @media (min-width: 1000px) {
@@ -239,9 +272,30 @@ body {
 
 @media (min-width: 1200px) {
   
+  
   body {
     width: 1050px;
   }
+  
+  
+  /*
+  .title {
+    
+  }
+  */
+  .title.is-large {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+  .title.is-medium {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  .title.is-small {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+  
   
 }
 
