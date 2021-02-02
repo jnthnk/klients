@@ -8,12 +8,9 @@
 <body>
     
     <section id="formulario">
-        <form>
+        <form action="http://localhost/klients/client.php">
             <h2>Controle de Clientes</h2>
-            <input  type="submit" value="Cadastrar">
-            <input  type="submit" value="Procurar">
-            
-
+            <input  type="button" value="Cadastrar">
         </form>
     </section>
 
@@ -46,7 +43,7 @@
 
                 if(!$err){
                     $lista = json_decode($response,true);
-                    print_r($lista);
+                    
                     foreach ($lista['clients'] as $key => $linha) {
                         echo
                             '<tr id="Titulo">
@@ -54,15 +51,11 @@
                                 <td>'.$linha['name'].'</td>
                                 <td>'.$linha['CPF'].'</td>
                                 <td>'.$linha['date'].'</td>
-
+                                <td><input  type="submit" value="Editar"><input  type="submit" value="Excluir"></td>
                             </tr>';
-
                     }
-
                 }
-
             ?>
-
         </table>
     </section>
 

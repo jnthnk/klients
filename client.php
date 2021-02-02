@@ -11,7 +11,7 @@
             <input type="text" name="name" id="name">
             <label for='cpf'>CPF</label>
             <input type="text" name="cpf" id="cpf">
-            <label for='date'>Data Nasc</label>
+            <label for='date'>Data Nascimento (YYYY-MM-DD)</label>
             <input type="text" name="date" id="date">
             <input type="submit" value="OK">
         </form>
