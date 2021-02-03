@@ -38,23 +38,23 @@ $page = [
     </header>
     <section class="content">
       <p class="text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus, rerum.</p>
-      <table class="table">
-        <thead class="table-head">
+      <table class="content-table">
+        <thead class="content-t-head">
           <tr class="grid">
-            <th class="grid-item">ID</th>
-            <th class="grid-item">Nome:</th>
-            <th class="grid-item">CPF:</th>
-            <th class="grid-item">Data de nasc.:</th>
+            <th class="grid-item no-1">ID</th>
+            <th class="grid-item no-2">Nome:</th>
+            <th class="grid-item no-3">CPF:</th>
+            <th class="grid-item no-4">Data de nasc.:</th>
           </tr>
         </thead>
         <?php if ($page['clients']) { ?>
-          <tbody class="table-body">
+          <tbody class="content-t-body">
             <?php foreach ($page['clients'] as $client) { ?>
               <tr class="grid">
-                <td class="grid-item"><?php echo $client['ID'] ?></td>
-                <td class="grid-item"><a class="link" href="client-2.php?ID=<?php echo $client['ID'] ?>"><?php echo $client['name'] ?></a></td>
-                <td class="grid-item"><?php echo $client['CPF'] ?></td>
-                <td class="grid-item"><?php echo date('d/m/Y', $client['date']) ?></td>
+                <td class="grid-item no-1"><?php echo $client['ID'] ?></td>
+                <td class="grid-item no-2"><a class="link" href="client-2.php?ID=<?php echo $client['ID'] ?>"><?php echo $client['name'] ?></a></td>
+                <td class="grid-item no-3"><?php echo $client['CPF'] ?></td>
+                <td class="grid-item no-4"><?php echo date('d/m/Y', $client['date']) ?></td>
               </tr>
             <?php } ?>
           </tbody>
