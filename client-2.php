@@ -31,9 +31,18 @@ $page_title = 'Cadastrar Novo Cliente';
 
 // 
 
+if ($data['client'] ?? '') {
+  $page_button = 'Salvar alteracoes';
+} else {
+  $page_button = 'Adicionar novo';
+}
+
+
+// 
+
 $page = [
   'title' => $page_title,
-  
+  'button' => $page_button,
 ];
 
 
@@ -50,22 +59,32 @@ $page = [
       <h1 class="title is-large"><?php echo $page['title'] ?>:</h1>
       <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident incidunt magni ipsa possimus dolorum numquam aliquid porro odio velit aliquam!</p>
     </header>
-    <nav class="options">
+    <form class="content">
+      <p class="text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus, rerum.</p>
       <ul class="grid">
         <li class="grid-item">
-          <a class="link" href="index-2.php">Voltar a lista</a>
+          <label class="text" for="name">Nome completo:</label>
+          <input class="input" id="CPF" name="CPF" type="text" placeholder="Insira o nome aqui..." required>
         </li>
         <li class="grid-item">
-          <a class="link" href="client-2.php">Guardar mudancas</a>
+          <label class="text" for="CPF">CPF:</label>
+          <input class="input" id="CPF" name="CPF" type="text" placeholder="Insira o CPF aqui..." required>
+        </li>
+        <li class="grid-item">
+          <label class="text" for="name">Data de nascimento:</label>
+          <input class="input" type="date" placeholder="Selecione a data aqui..." required>
         </li>
       </ul>
-    </nav>
-    <section class="content">
-      <p class="text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus, rerum.</p>
-    </section>
-    <section class="section">
-      <p class="text">Debug:</p>
-      <pre><?php echo var_dump($data); ?></pre>
-    </section>
+      <nav class="content-options">
+        <ul class="grid">
+          <li class="grid-item">
+            <a class="link" href="client-2.php">Cadastrar Novo Cliente</a>
+          </li>
+          <li class="grid-item">
+            <button class="link" type="submit"><?php echo $page['button'] ?></button>
+          </li>
+        </ul>
+      </nav>
+    </form>
   </body>
 </html>
