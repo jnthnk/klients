@@ -23,15 +23,31 @@
 html {
 	font-size: 16px;
 	background: #004D40;
+	color: #80CBC4;
+}
+
+@media (min-width: 800px) {
+	html {
+		font-size: 17px;
+	}
+}
+
+@media (min-width: 1200px) {
+	html {
+		font-size: 18px;
+	}
 }
 
 body {
 	min-width: 320px;
 	margin: 0 auto;
 	font: 400 normal 1rem/1 'Open Sans', sans-serif;
+	letter-spacing: .01rem;
+}
+
+body > .wrap {
 	color: #333;
 	background: #fff;
-	letter-spacing: .01rem;
 	box-shadow: 0 0 2rem 1rem rgba(0, 0, 0, 0.1);
 }
 
@@ -57,6 +73,11 @@ body {
 	body {
 		width: 1200px;
 	}
+}
+
+.wrap {
+	display: block;
+	overflow: hidden;
 }
 
 .grid {
@@ -137,6 +158,12 @@ body {
 
 .text.is-large {
 	font-size: 1.1rem;
+}
+
+.text.has-dots {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 .link {
@@ -291,13 +318,13 @@ body {
 
 .content-options {
 	display: block;
-	padding: 0 1rem;
+	padding: 1rem 2rem;
 	margin: 2rem -2rem -2rem;
 	background: #FF6F00;
 }
 
 .content-options > .grid {
-	padding: .5rem .25rem;
+	margin: -.25rem;
 }
 
 .content-options > .grid > .grid-item {
@@ -305,11 +332,11 @@ body {
 	width: auto;
 }
 
-.content-options > .grid > .grid-item.no-1 {
-	width: 100%;
+.content-options > .grid > .grid-item.is-left {
+	margin-right: auto;
 }
 
-.content-options > .grid > .grid-item.no-2 {
+.content-options > .grid > .grid-item.is-right {
 	margin-left: auto;
 }
 
@@ -354,5 +381,22 @@ body {
 	}
 	.content > .grid > .grid-item.no-3 {
 		width: 20%;
+	}
+}
+
+.copyright {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	padding: 2rem;
+}
+
+.copyright > .text {
+	letter-spacing: .02rem;
+}
+
+@media (min-width: 800px) {
+	.copyright {
+		padding: 1rem 0 0;
 	}
 }

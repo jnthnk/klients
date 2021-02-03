@@ -56,56 +56,59 @@ $page = [
     <link rel="stylesheet" href="assets/styles-2.css">
   </head>
   <body>
-    <header class="header">
-      <?php if ($data['client'] ?? null) { ?>
-        <h1 class="title is-large">Editar cliente:</h1>
-        <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident incidunt magni ipsa possimus dolorum numquam aliquid porro odio velit aliquam!</p>
-      <?php } else { ?>
-        <h1 class="title is-large">Cadastrar novo cliente:</h1>
-        <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident incidunt magni ipsa possimus dolorum numquam aliquid porro odio velit aliquam!</p>
-      <?php } ?>
-    </header>
-    <form class="content">
-      <p class="text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus, rerum.</p>
-      <ul class="grid">
-        <li class="grid-item no-1">
-          <div class="content-control">
-            <label class="text" for="name">Nome completo:</label>
-            <input class="input" id="CPF" name="CPF" type="text" placeholder="Insira o nome aqui..." required>
-          </div>
-        </li>
-        <li class="grid-item no-2">
-          <div class="content-control">
-            <label class="text" for="CPF">CPF:</label>
-            <input class="input" id="CPF" name="CPF" type="text" placeholder="Insira o CPF aqui..." required>
-          </div>
-        </li>
-        <li class="grid-item no-3">
-          <div class="content-control">
-            <label class="text" for="name">Data de nascimento:</label>
-            <input class="input" type="date" placeholder="Selecione a data aqui..." required>
-          </div>
-        </li>
-      </ul>
-      <nav class="content-options">
+    <div class="wrap">
+      <header class="header">
+        <?php if ($data['client'] ?? null) { ?>
+          <h1 class="title is-large">Editar cliente:</h1>
+          <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident incidunt magni ipsa possimus dolorum numquam aliquid porro odio velit aliquam!</p>
+        <?php } else { ?>
+          <h1 class="title is-large">Cadastrar novo cliente:</h1>
+          <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident incidunt magni ipsa possimus dolorum numquam aliquid porro odio velit aliquam!</p>
+        <?php } ?>
+      </header>
+      <form class="content">
+        <p class="text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus, rerum.</p>
         <ul class="grid">
           <li class="grid-item no-1">
-            <a class="button" href="index-2.php">Retornar à lista</a>
+            <div class="content-control">
+              <label class="text has-dots" for="name">Nome completo:</label>
+              <input class="input" id="CPF" name="CPF" type="text" placeholder="Insira o nome aqui..." required>
+            </div>
           </li>
-          <?php if ($data['client'] ?? null) { ?>
-            <li class="grid-item no-2">
-              <a class="button is-red" href="#">Remover</a>
-            </li>
-            <li class="grid-item no-3">
-              <button class="button is-green" type="submit">Salvar alterações</button>
-            </li>
-          <?php } else { ?>
-            <li class="grid-item no-2">
-              <button class="button is-green" type="submit">Adicionar novo</button>
-            </li>
-          <?php } ?>
+          <li class="grid-item no-2">
+            <div class="content-control">
+              <label class="text has-dots" for="CPF">CPF:</label>
+              <input class="input" id="CPF" name="CPF" type="text" placeholder="Insira o CPF aqui..." required>
+            </div>
+          </li>
+          <li class="grid-item no-3">
+            <div class="content-control">
+              <label class="text has-dots" for="name">Data de nascimento:</label>
+              <input class="input" type="date" placeholder="dd/mm/yyyy" required>
+            </div>
+          </li>
         </ul>
-      </nav>
-    </form>
+        <nav class="content-options">
+          <ul class="grid">
+            <?php if ($data['client'] ?? null) { ?>
+              <li class="grid-item no-1 is-left">
+                <a class="button is-red" href="#">Remover</a>
+              </li>
+              <li class="grid-item no-2 is-right">
+                <button class="button is-green" type="submit">Salvar alterações</button>
+              </li>
+            <?php } else { ?>
+              <li class="grid-item no-1 is-right">
+                <button class="button is-green" type="submit">Adicionar novo</button>
+              </li>
+            <?php } ?>
+          </ul>
+        </nav>
+      </form>
+    </div>
+    <footer class="copyright">
+      <p class="text is-small">Lorem ipsum dolor sit</p>
+      <p class="text is-small">Klients v1.1</p>
+    </footer>
   </body>
 </html>

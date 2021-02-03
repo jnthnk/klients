@@ -31,8 +31,19 @@
 
 
 html {
+  
   font-size: 16px;
   background: #004D40;
+  color: #80CBC4;
+  
+  @media (min-width: 800px) {
+    font-size: 17px;
+  }
+  
+  @media (min-width: 1200px) {
+    font-size: 18px;
+  }
+  
 }
 
 
@@ -41,10 +52,13 @@ body {
   min-width: 320px;
   margin: 0 auto;
   font: 400 normal 1rem/1 'Open Sans', sans-serif;
-  color: #333;
-  background: #fff;
   letter-spacing: .01rem;
-  box-shadow: 0 0 2rem 1rem rgba(0, 0, 0, .1);
+  
+  > .wrap {
+    color: #333;
+    background: #fff;
+    box-shadow: 0 0 2rem 1rem rgba(0, 0, 0, .1);
+  }
   
   @media (min-width: 800px) {
     width: 750px;
@@ -66,6 +80,12 @@ body {
 
 
 // BLOCKS
+
+
+.wrap {
+  display: block;
+  overflow: hidden;
+}
 
 
 .grid {
@@ -160,6 +180,12 @@ body {
   
   &.is-large {
     font-size: 1.1rem;
+  }
+  
+  &.has-dots {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   
 }
@@ -361,24 +387,24 @@ body {
   @at-root .content-options {
     
     display: block;
-    padding: 0 1rem;
+    padding: 1rem 2rem;
     margin: 2rem -2rem -2rem;
     background: #FF6F00;
     
     > .grid {
       
-      padding: .5rem .25rem;
+      margin: -.25rem;
       
       > .grid-item {
         
         padding: .25rem;
         width: auto;
         
-        &.no-1 {
-          width: 100%;
+        &.is-left {
+          margin-right: auto;
         }
         
-        &.no-2 {
+        &.is-right {
           margin-left: auto;
         }
         
@@ -475,6 +501,24 @@ body {
       
     }
     
+  }
+  
+}
+
+
+.copyright {
+  
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  
+  > .text {
+    letter-spacing: .02rem;
+  }
+  
+  @media (min-width: 800px) {
+    padding: 1rem 0 0;
   }
   
 }
