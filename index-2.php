@@ -63,7 +63,7 @@ $page = [
       <nav class="content-options">
         <ul class="grid">
           <li class="grid-item">
-            <a class="link" href="client-2.php">Cadastrar Novo Cliente</a>
+            <a class="button is-green" href="client-2.php">Cadastrar Novo Cliente</a>
           </li>
         </ul>
       </nav>
