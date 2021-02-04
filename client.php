@@ -133,13 +133,15 @@ $page = [
 
   <script>
       function Edit(id){
+        console.log($('form').serialize());
         $.ajax({
           url: 'http://localhost/klients/api/client/'+id ,
           type: 'POST',
           data: $('form').serialize(),
+          
           success: function(data){ 
             alert("Atualizado com sucesso");   
-            history.back(-1);
+            window.location.replace("http://localhost/klients");
           }
         });
         
@@ -149,7 +151,7 @@ $page = [
             url: 'http://localhost/klients/api/client/'+id ,
             type: 'DELETE',
         });
-        history.back(-1);
+        window.location.replace("http://localhost/klients");
       }
       function New(){
         $.ajax({
@@ -158,7 +160,7 @@ $page = [
           data:$('form').serialize(),
           success: function(){
               alert("Cadastro com sucesso");
-              history.back(-2);
+              window.location.replace("http://localhost/klients");
           },             
         });
       }
