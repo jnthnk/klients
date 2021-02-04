@@ -133,42 +133,34 @@ $page = [
 
   <script>
       function Edit(id){
-          $.ajax({
-              url: 'http://localhost/klients/api/client/'+id ,
-              type: 'POST',
-              data: jQuery.param({
-                  "name": document.getElementById('name').value,
-                  "cpf":  document.getElementById('CPF').value,
-                  "date": document.getElementById('date').value
-              } ),
-              success: function(data){
-                  alert("Atualizado com sucesso");    
-              }
-          });
-          history.back();
+        $.ajax({
+          url: 'http://localhost/klients/api/client/'+id ,
+          type: 'POST',
+          data: $('form').serialize(),
+          success: function(data){ 
+            alert("Atualizado com sucesso");   
+            history.back(-1);
+          }
+        });
+        
       }
       function Remove(id){
-          $.ajax({
-              url: 'http://localhost/klients/api/client/'+id ,
-              type: 'DELETE',
-          });
-          history.back();
+        $.ajax({
+            url: 'http://localhost/klients/api/client/'+id ,
+            type: 'DELETE',
+        });
+        history.back(-1);
       }
       function New(){
-          $.ajax({
-            url: 'http://localhost/klients/api/client',
-                        type: 'POST',
-                        data:$('form').serialize(),
-                        success: function(){
-                            alert("Cadastro com sucesso");
-                            window.history.go(-1);
-                        },
-                        fail:function(){
-                          alert("Cadastro fail");
-                        }
-          });
-          window.history.go(-2);
-          location.reload();
+        $.ajax({
+          url: 'http://localhost/klients/api/client',
+          type: 'POST',
+          data:$('form').serialize(),
+          success: function(){
+              alert("Cadastro com sucesso");
+              history.back(-2);
+          },             
+        });
       }
   </script>
 </html>
