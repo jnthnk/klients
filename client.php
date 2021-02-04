@@ -75,7 +75,7 @@ $page = [
             <li class="grid-item no-2">
               <div class="content-control is-active">
                 <label class="text has-dots" for="cpf">CPF:</label>
-                <input class="input" id="cpf" name="cpf" type="text" value="<?php echo $data['client']['CPF']; ?>" placeholder="Insira o CPF aqui..." required>
+                <input class="input" id="cpf" name="cpf" type="text" oninput="maskcpf(this)" value="<?php echo $data['client']['CPF']; ?>" placeholder="Insira o CPF aqui..." required>
               </div>
             </li>
             <li class="grid-item no-3">
@@ -94,7 +94,7 @@ $page = [
             <li class="grid-item no-2">
               <div class="content-control is-active">
                 <label class="text has-dots" for="CPF">CPF:</label>
-                <input class="input" id="cpf" name="cpf" type="text" placeholder="Insira o CPF aqui..." required>
+                <input class="input" id="cpf" name="cpf" type="text" oninput="maskcpf(this)" placeholder="Insira o CPF aqui..." required>
               </div>
             </li>
             <li class="grid-item no-3">
@@ -137,7 +137,6 @@ $page = [
           url: 'http://localhost/klients/api/client/'+id ,
           type: 'POST',
           data: $('form').serialize(),
-          
           success: function(data){ 
             alert("Atualizado com sucesso");   
             window.location.replace("http://localhost/klients");
@@ -149,9 +148,13 @@ $page = [
         $.ajax({
             url: 'http://localhost/klients/api/client/'+id ,
             type: 'DELETE',
+            success: function(data){ 
+            alert("Removido com sucesso");   
+            window.location.replace("http://localhost/klients");
+          }
         });
-        window.location.replace("http://localhost/klients");
       }
+
       function New(){
         $.ajax({
           url: 'http://localhost/klients/api/client',
@@ -163,5 +166,18 @@ $page = [
           },             
         });
       }
+
+      function maskcpf(i){
+        var v = i.value;
+        if(isNaN(v[v.length-1])){ // impede entrar outro caractere que não seja número
+            i.value = v.substring(0, v.length-1);
+            return;
+        }
+        i.setAttribute("maxlength", "14");
+        if (v.length == 3 || v.length == 7) i.value += ".";
+        if (v.length == 11) i.value += "-";
+      }
+
+
   </script>
 </html>
