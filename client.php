@@ -133,7 +133,6 @@ $page = [
 
   <script>
       function Edit(id){
-        console.log($('form').serialize());
         $.ajax({
           url: 'http://localhost/klients/api/client/'+id ,
           type: 'POST',
