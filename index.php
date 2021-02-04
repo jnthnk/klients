@@ -19,7 +19,7 @@ $data = json_decode($data, true);
 // 
 
 $page = [
-  'clients' => $data['clients'],
+  'clients' => isset($data['clients'])?$data['clients']:[],
 ];
 
 
@@ -56,11 +56,20 @@ $page = [
                   <td class="grid-item no-2"><a class="link" href="client.php?ID=<?php echo $client['ID'] ?>"><?php echo $client['name'] ?></a></td>
                   <td class="grid-item no-3"><?php echo $client['CPF'] ?></td>
                   <td class="grid-item no-4"><?php echo date('d/m/Y', $client['date']) ?></td>
-                </tr>
-              <?php } ?>
+                </tr>    
+              <?php } ?>  
             </tbody>
           <?php } ?>
         </table>
+        <?php      // Caso não tenha nada na tabela
+          if(count($page['clients']) ==0){
+            echo'
+            <div id="error">
+              Sem clientes registrados
+            </div>
+            ';
+          }
+        ?>
         <nav class="content-options">
           <ul class="grid">
             <li class="grid-item is-right">

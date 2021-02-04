@@ -405,3 +405,11 @@ body > .wrap {
 		padding: 1rem 0 0;
 	}
 }
+
+#error { 
+	background-color: #FFD2A6; 
+	border: #c00 solid 2px; 
+	margin: 20px 0px 0px 0px; 
+	padding:10px; 
+	width: 100%; 
+}                
