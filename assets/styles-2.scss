@@ -230,8 +230,13 @@ body {
   border: none;
   outline: none;
   border-radius: .25rem;
+  box-shadow: 0 .1rem .2rem rgba(0, 0, 0, .1);
   cursor: pointer;
-  transition: background-color .25s;
+  transition: background-color .25s, box-shadow .25s;
+  
+  &:active {
+    box-shadow: 0 .1rem .2rem rgba(0, 0, 0, .1);
+  }
   
   &.is-green {
     

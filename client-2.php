@@ -69,24 +69,45 @@ $page = [
       <form class="content">
         <p class="text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus, rerum.</p>
         <ul class="grid">
-          <li class="grid-item no-1">
-            <div class="content-control">
-              <label class="text has-dots" for="name">Nome completo:</label>
-              <input class="input" id="CPF" name="CPF" type="text" placeholder="Insira o nome aqui..." required>
-            </div>
-          </li>
-          <li class="grid-item no-2">
-            <div class="content-control">
-              <label class="text has-dots" for="CPF">CPF:</label>
-              <input class="input" id="CPF" name="CPF" type="text" placeholder="Insira o CPF aqui..." required>
-            </div>
-          </li>
-          <li class="grid-item no-3">
-            <div class="content-control">
-              <label class="text has-dots" for="name">Data de nascimento:</label>
-              <input class="input" type="date" placeholder="dd/mm/yyyy" required>
-            </div>
-          </li>
+          <?php if ($data['client'] ?? null) { ?>
+            <li class="grid-item no-1">
+              <div class="content-control is-active">
+                <label class="text has-dots" for="name">Nome completo:</label>
+                <input class="input" id="name" name="name" type="text" value="<?php echo $data['client']['name']; ?>" placeholder="Insira o nome aqui..." required>
+              </div>
+            </li>
+            <li class="grid-item no-2">
+              <div class="content-control is-active">
+                <label class="text has-dots" for="cpf">CPF:</label>
+                <input class="input" id="cpf" name="cpf" type="text" value="<?php echo $data['client']['CPF']; ?>" placeholder="Insira o CPF aqui..." required>
+              </div>
+            </li>
+            <li class="grid-item no-3">
+              <div class="content-control is-active">
+                <label class="text has-dots" for="date">Data de nascimento:</label>
+                <input class="input" id="date" name="date" type="date" value="<?php echo date('Y-m-d', $data['client']['date']); ?>" placeholder="dd/mm/yyyy" required>
+              </div>
+            </li>
+          <?php } else { ?>
+            <li class="grid-item no-1">
+              <div class="content-control is-active">
+                <label class="text has-dots" for="name">Nome completo:</label>
+                <input class="input" id="CPF" name="CPF" type="text" placeholder="Insira o nome aqui..." required>
+              </div>
+            </li>
+            <li class="grid-item no-2">
+              <div class="content-control is-active">
+                <label class="text has-dots" for="CPF">CPF:</label>
+                <input class="input" id="CPF" name="CPF" type="text" placeholder="Insira o CPF aqui..." required>
+              </div>
+            </li>
+            <li class="grid-item no-3">
+              <div class="content-control is-active">
+                <label class="text has-dots" for="name">Data de nascimento:</label>
+                <input class="input" type="date" placeholder="dd/mm/yyyy" required>
+              </div>
+            </li>
+          <?php } ?>
         </ul>
         <nav class="content-options">
           <ul class="grid">
