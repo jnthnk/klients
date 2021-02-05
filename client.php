@@ -122,9 +122,7 @@ $page = [
           </ul>
         </nav>
       </form>
-
-    
-    </div>
+   </div>
     <footer class="copyright">
       <p class="text is-small">Lorem ipsum dolor sit</p>
       <p class="text is-small">Klients v1.1</p>
@@ -133,16 +131,17 @@ $page = [
 
   <script>
       function Edit(id){
-        $.ajax({
-          url: 'http://localhost/klients/api/client/'+id ,
-          type: 'POST',
-          data: $('form').serialize(),
-          success: function(data){ 
-            alert("Atualizado com sucesso");   
-            window.location.replace("http://localhost/klients");
-          }
-        });
-        
+        if(!document.getElementById('name').value==""&&!document.getElementById('cpf').value==""&&!document.getElementById('date').value==""){
+          $.ajax({
+            url: 'http://localhost/klients/api/client/'+id ,
+            type: 'POST',
+            data: $('form').serialize(),
+            success: function(data){ 
+              alert("Atualizado com sucesso");   
+              window.location.replace("http://localhost/klients");
+            }
+          });
+        }      
       }
       function Remove(id){
         $.ajax({
@@ -156,7 +155,8 @@ $page = [
       }
 
       function New(){
-        $.ajax({
+        if(!document.getElementById('name').value==""&&!document.getElementById('cpf').value==""&&!document.getElementById('date').value==""){
+          $.ajax({
           url: 'http://localhost/klients/api/client',
           type: 'POST',
           data:$('form').serialize(),
@@ -165,6 +165,10 @@ $page = [
               window.location.replace("http://localhost/klients");
           },             
         });
+   
+        }
+            
+
       }
 
       function maskcpf(i){
